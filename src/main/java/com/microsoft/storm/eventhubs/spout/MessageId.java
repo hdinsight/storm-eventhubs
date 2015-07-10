@@ -17,31 +17,40 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+public class MessageId {
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+  private final String partitionId;
+  private final String offset;
+  private final long sequenceNumber;
 
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
+  public MessageId(
+    String partitionId,
+    String offset,
+    long sequenceNumber) {
+    this.partitionId = partitionId;
+    this.offset = offset;
+    this.sequenceNumber = sequenceNumber;
   }
 
-  @After
-  public void tearDown() throws Exception {
+  public static MessageId create(String partitionId, String offset, long sequenceNumber) {
+    return new MessageId(partitionId, offset, sequenceNumber);
   }
 
-  @Test
-  public void testEventDataComparision() {
+  public String getPartitionId() {
+    return this.partitionId;
+  }
 
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
+  public String getOffset() {
+    return this.offset;
+  }
 
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
+  public Long getSequenceNumber() {
+    return this.sequenceNumber;
+  }
+  
+  @Override
+  public String toString() {
+    return String.format("PartitionId: %s, Offset: %s, SequenceNumber: %s",
+      this.partitionId, this.offset, this.sequenceNumber);
   }
 }

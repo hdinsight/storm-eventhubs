@@ -17,38 +17,39 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import java.util.HashMap;
-import java.util.Map;
+import backtype.storm.tuple.Fields;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.qpid.amqp_1_0.client.Message;
+import org.apache.qpid.amqp_1_0.type.Section;
+import org.apache.qpid.amqp_1_0.type.messaging.AmqpValue;
+import org.apache.qpid.amqp_1_0.type.messaging.Data;
 
-import com.microsoft.eventhubs.spout.IStateStore;
+public class EventDataScheme implements IEventDataScheme {
 
-/**
- * A state store mocker
- */
-public class StateStoreMock implements IStateStore {
-  Map<String, String> myDataMap;
-  @Override
-  public void open() {
-    myDataMap = new HashMap<String, String>();
-  }
+  private static final long serialVersionUID = 1L;
 
   @Override
-  public void close() {
-    myDataMap = null;
-  }
+  public List<Object> deserialize(Message message) {
+    List<Object> fieldContents = new ArrayList<Object>();
 
-  @Override
-  public void saveData(String path, String data) {
-    if(myDataMap != null) {
-      myDataMap.put(path, data);
+    for (Section section : message.getPayload()) {
+      if (section instanceof Data) {
+        Data data = (Data) section;
+        fieldContents.add(new String(data.getValue().getArray()));
+        return fieldContents;
+      } else if (section instanceof AmqpValue) {
+        AmqpValue amqpValue = (AmqpValue) section;
+        fieldContents.add(amqpValue.getValue().toString());
+        return fieldContents;
+      }
     }
-  }
 
-  @Override
-  public String readData(String path) {
-    if(myDataMap != null) {
-      return myDataMap.get(path);
-    }
     return null;
+  }
+
+  @Override
+  public Fields getOutputFields() {
+    return new Fields(FieldConstants.Message);
   }
 }

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.apache.storm.eventhubs.spout;
+package com.microsoft.eventhubs.spout;
 
 import static org.junit.Assert.*;
 

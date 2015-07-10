@@ -17,31 +17,20 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import com.microsoft.eventhubs.client.EventHubException;
+import com.microsoft.eventhubs.client.IEventHubFilter;
 
-public class TestEventData {
+public interface IEventHubReceiver {
 
-  @Before
-  public void setUp() throws Exception {
-  }
+  void open(IEventHubFilter filter) throws EventHubException;
 
-  @After
-  public void tearDown() throws Exception {
-  }
+  void close();
+  
+  boolean isOpen();
 
-  @Test
-  public void testEventDataComparision() {
-
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
-  }
+  EventData receive(long timeoutInMilliseconds);
+  
+  Map getMetricsData();
 }

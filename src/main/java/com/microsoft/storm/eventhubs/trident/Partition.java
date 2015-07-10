@@ -15,33 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.microsoft.eventhubs.spout;
+package com.microsoft.eventhubs.trident;
 
-import static org.junit.Assert.*;
+import java.io.Serializable;
+import com.microsoft.eventhubs.spout.EventHubSpoutConfig;
+import storm.trident.spout.ISpoutPartition;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
+/**
+ * Represents an EventHub partition
+ */
+public class Partition implements ISpoutPartition, Serializable {
+  private static final long serialVersionUID = 1L;
+  String partitionId;
+  
+  public Partition(EventHubSpoutConfig config, String partitionId) {
+    this.partitionId = partitionId;
   }
-
-  @After
-  public void tearDown() throws Exception {
-  }
-
-  @Test
-  public void testEventDataComparision() {
-
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
+  
+  @Override
+  public String getId() {
+    return partitionId;
   }
 }

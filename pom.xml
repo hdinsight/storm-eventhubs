@@ -17,30 +17,27 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
-    <parent>
-        <artifactId>storm</artifactId>
-        <groupId>org.apache.storm</groupId>
-        <version>0.11.0-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
-    </parent>
-    
-    <artifactId>storm-eventhubs</artifactId>
-    <version>0.11.0-SNAPSHOT</version>
+    <groupId>com.microsoft.eventhubs</groupId>
+    <artifactId>eventhubs-storm-spout</artifactId>
+    <version>0.9.3</version>
     <packaging>jar</packaging>
-    <name>storm-eventhubs</name>
-    <description>EventHubs Storm Spout</description>
+    <name>EventHubs Storm Spout</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <eventhubs.client.version>0.9.1</eventhubs.client.version>
+		<maven.jar.plugin.version>2.5</maven.jar.plugin.version>
+		<maven.shade.plugin.version>2.3</maven.shade.plugin.version>
+        <curator.version>2.5.0</curator.version>
+        <storm.version>0.9.3</storm.version>
+		<junit.version>4.11</junit.version>
     </properties>
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
+                <version>${maven.shade.plugin.version}</version>
                 <executions>
                     <execution>
                         <goals>
@@ -57,6 +54,18 @@
                     <outputFile>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</outputFile>
                 </configuration>
 	        </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin.version}</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.microsoft.eventhubs.samples.EventCount</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
             <plugin>
 		        <artifactId>maven-antrun-plugin</artifactId>
 		        <executions>
@@ -84,7 +93,7 @@
         <dependency>
             <groupId>org.apache.storm</groupId>
             <artifactId>storm-core</artifactId>
-            <version>${project.version}</version>
+            <version>${storm.version}</version>
             <!-- keep storm out of the jar-with-dependencies -->
             <type>jar</type>
             <scope>provided</scope>
@@ -107,7 +116,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies> 

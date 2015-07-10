@@ -17,31 +17,21 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+public class EventHubSpoutException extends Exception {
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
+  public EventHubSpoutException() {
+    super();
   }
 
-  @After
-  public void tearDown() throws Exception {
+  public EventHubSpoutException(String message) {
+    super(message);
   }
 
-  @Test
-  public void testEventDataComparision() {
+  public EventHubSpoutException(Throwable cause) {
+    super(cause);
+  }
 
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
+  public EventHubSpoutException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

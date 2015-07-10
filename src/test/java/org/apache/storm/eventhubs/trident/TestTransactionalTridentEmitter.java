@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.apache.storm.eventhubs.trident;
+package com.microsoft.eventhubs.trident;
 
 import static org.junit.Assert.*;
 
@@ -25,10 +25,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import org.apache.storm.eventhubs.spout.EventHubReceiverMock;
-import org.apache.storm.eventhubs.spout.EventHubSpoutConfig;
-import org.apache.storm.eventhubs.spout.IEventHubReceiver;
-import org.apache.storm.eventhubs.spout.IEventHubReceiverFactory;
+import com.microsoft.eventhubs.spout.EventHubReceiverMock;
+import com.microsoft.eventhubs.spout.EventHubSpoutConfig;
+import com.microsoft.eventhubs.spout.IEventHubReceiver;
+import com.microsoft.eventhubs.spout.IEventHubReceiverFactory;
 
 public class TestTransactionalTridentEmitter {
   private TransactionalTridentEventHubEmitter emitter;

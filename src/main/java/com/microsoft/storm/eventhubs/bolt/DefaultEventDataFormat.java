@@ -15,33 +15,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.microsoft.eventhubs.spout;
+package com.microsoft.eventhubs.bolt;
 
-import static org.junit.Assert.*;
+import backtype.storm.tuple.Tuple;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
+/**
+ * A default implementation of IEventDataFormat that converts the tuple
+ * into a delimited string.
+ */
+public class DefaultEventDataFormat implements IEventDataFormat {
+  private static final long serialVersionUID = 1L;
+  private String delimiter = ",";
+  
+  public DefaultEventDataFormat withFieldDelimiter(String delimiter) {
+    this.delimiter = delimiter;
+    return this;
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @Override
+  public byte[] serialize(Tuple tuple) {
+    StringBuilder sb = new StringBuilder();
+    for(Object obj : tuple.getValues()) {
+      if(sb.length() != 0) {
+        sb.append(delimiter);
+      }
+      sb.append(obj.toString());
+    }
+    return sb.toString().getBytes();
   }
 
-  @Test
-  public void testEventDataComparision() {
-
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
-  }
 }

@@ -15,11 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.apache.storm.eventhubs.spout;
+package com.microsoft.eventhubs.spout;
 
-import org.apache.storm.eventhubs.spout.PartitionManager;
-import org.apache.storm.eventhubs.spout.EventData;
-import org.apache.storm.eventhubs.spout.EventHubSpoutConfig;
+import com.microsoft.eventhubs.spout.PartitionManager;
+import com.microsoft.eventhubs.spout.EventData;
+import com.microsoft.eventhubs.spout.EventHubSpoutConfig;
 
 /**
  * This mock exercises PartitionManager

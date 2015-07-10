@@ -17,31 +17,21 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+import java.util.Map;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+public interface IPartitionManager {
 
-public class TestEventData {
+  void open() throws Exception;
 
-  @Before
-  public void setUp() throws Exception {
-  }
+  void close();
 
-  @After
-  public void tearDown() throws Exception {
-  }
+  EventData receive();
 
-  @Test
-  public void testEventDataComparision() {
+  void checkpoint();
 
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
+  void ack(String offset);
 
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
-  }
+  void fail(String offset);
+  
+  Map getMetricsData();
 }

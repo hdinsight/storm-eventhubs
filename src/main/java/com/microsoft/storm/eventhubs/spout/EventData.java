@@ -17,31 +17,32 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+import org.apache.qpid.amqp_1_0.client.Message;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+public class EventData implements Comparable<EventData> {
+  private final Message message;
+  private final MessageId messageId;
 
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
+  public EventData(Message message, MessageId messageId) {
+    this.message = message;
+    this.messageId = messageId;
   }
 
-  @After
-  public void tearDown() throws Exception {
+  public static EventData create(Message message, MessageId messageId) {
+    return new EventData(message, messageId);
   }
 
-  @Test
-  public void testEventDataComparision() {
+  public Message getMessage() {
+    return this.message;
+  }
 
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
+  public MessageId getMessageId() {
+    return this.messageId;
+  }
 
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
+  @Override
+  public int compareTo(EventData ed) {
+    return messageId.getSequenceNumber().
+        compareTo(ed.getMessageId().getSequenceNumber());
   }
 }

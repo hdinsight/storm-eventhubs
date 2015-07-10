@@ -15,15 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package org.apache.storm.eventhubs.spout;
+package com.microsoft.eventhubs.spout;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.storm.eventhubs.spout.MessageId;
-import org.apache.storm.eventhubs.spout.EventData;
-import org.apache.storm.eventhubs.spout.IEventHubReceiver;
+import com.microsoft.eventhubs.spout.MessageId;
+import com.microsoft.eventhubs.spout.EventData;
+import com.microsoft.eventhubs.spout.IEventHubReceiver;
 import org.apache.qpid.amqp_1_0.client.Message;
 import org.apache.qpid.amqp_1_0.jms.impl.TextMessageImpl;
 import org.apache.qpid.amqp_1_0.type.Binary;

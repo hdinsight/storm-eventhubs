@@ -1,6 +1,8 @@
-**:heavy_exclamation_mark:```IMPORTANT NOTE```:heavy_exclamation_mark:: This repository is a clone of [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs) to make the latest version of the eventhubs spout compatible with Apache Storm 0.9.3.**
+**:heavy_exclamation_mark:```IMPORTANT NOTE```:heavy_exclamation_mark:: This repository is a clone of [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs) to make the latest version of the EventHubs spout compatible with Apache Storm 0.9.3 on Microsoft HDInsight Clusters with version 3.2.**
 
-This allows users of Apache Storm 0.9.3 to take benefits of any bug fixes landing in newer versions of storm-eventhubs spout. If you are using Storm 0.10.x or later, please use the storm-eventhubs from the [Apache Storm Github Project](https://github.com/apache/storm).
+Users of Apache Storm 0.9.3 on Microsoft HDInsight Clusters with version 3.2 can take the benefits of any bug fixes landing in newer versions of storm-eventhubs spout through this project.
+
+**If you are using Storm 0.10.x or later, please use the storm-eventhubs from the [Apache Storm GitHub Project](https://github.com/apache/storm).**
 
 =====================
 storm-eventhubs

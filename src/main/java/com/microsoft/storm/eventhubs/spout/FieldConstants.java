@@ -17,31 +17,9 @@
  *******************************************************************************/
 package com.microsoft.eventhubs.spout;
 
-import static org.junit.Assert.*;
+public class FieldConstants {
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
-  }
-
-  @After
-  public void tearDown() throws Exception {
-  }
-
-  @Test
-  public void testEventDataComparision() {
-
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
-  }
+  public static final String PartitionKey = "partitionKey";
+  public static final String Offset = "offset";
+  public static final String Message = "message";
 }

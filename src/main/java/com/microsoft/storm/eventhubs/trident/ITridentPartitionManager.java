@@ -15,33 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.microsoft.eventhubs.spout;
+package com.microsoft.eventhubs.trident;
 
-import static org.junit.Assert.*;
+import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import com.microsoft.eventhubs.spout.EventData;
 
-public class TestEventData {
-
-  @Before
-  public void setUp() throws Exception {
-  }
-
-  @After
-  public void tearDown() throws Exception {
-  }
-
-  @Test
-  public void testEventDataComparision() {
-
-	MessageId messageId1 = MessageId.create(null, "3", 1);
-	EventData eventData1 = EventData.create(null, messageId1);
-
-	MessageId messageId2 = MessageId.create(null, "13", 2);
-	EventData eventData2 = EventData.create(null, messageId2);
-
-	assertTrue(eventData2.compareTo(eventData1) > 0);
-  }
+public interface ITridentPartitionManager {
+  boolean open(String offset);
+  void close();
+  
+  /**
+   * receive a batch of messages from EvenHub up to "count" messages
+   * @param offset the starting offset
+   * @param count max number of messages in this batch
+   * @return list of EventData, if failed to receive, return empty list
+   */
+  public List<EventData> receiveBatch(String offset, int count);
 }
