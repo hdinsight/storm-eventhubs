@@ -1,3 +1,8 @@
+**:heavy_exclamation_mark:```IMPORTANT NOTE```:heavy_exclamation_mark:: This repository is a clone of [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs) to make the latest version of the eventhubs spout compatible with Apache Storm 0.9.3.**
+
+This allows users of Apache Storm 0.9.3 to take benefits of any bug fixes landing in newer versions of storm-eventhubs spout. If you are using Storm 0.10.x or later, please use the storm-eventhubs from the [Apache Storm Github Project](https://github.com/apache/storm).
+
+=====================
 storm-eventhubs
 =====================
 
@@ -33,7 +38,14 @@ We have included a simple EventHubs send client for testing purpose. You can run
 If you want to send messages to all partitions, use "-1" as partitionId.
 
 ### Windows Azure Eventhubs ###
-	http://azure.microsoft.com/en-us/services/event-hubs/
+* http://azure.microsoft.com/en-us/services/event-hubs/
+	
+### Suggested reads
+* http://blogs.msdn.com/b/shanyu/archive/2015/05/14/performance-tuning-for-hdinsight-storm-and-microsoft-azure-eventhubs.aspx
+
+### Related projects
+* https://github.com/hdinsight/eventhubs-client
+* https://github.com/hdinsight/hdinsight-storm-examples
 
 ## Committer Sponsors
 
