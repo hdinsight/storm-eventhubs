@@ -49,6 +49,11 @@ If you want to send messages to all partitions, use "-1" as partitionId.
 * https://github.com/hdinsight/eventhubs-client
 * https://github.com/hdinsight/hdinsight-storm-examples
 
+## Developers
+* Shanyu Zhao ([shzhao@microsoft.com](mailto: shzhao@microsoft.com))
+* SeongJoon Kwak ([sjkwak@microsoft.com](mailto: sjkwak@microsoft.com))
+* Ravi Tandon ([rtandon@microsoft.com](mailto: rtandon@microsoft.com))
+
 ## Committer Sponsors
 
  * P. Taylor Goetz ([ptgoetz@apache.org](mailto:ptgoetz@apache.org))
