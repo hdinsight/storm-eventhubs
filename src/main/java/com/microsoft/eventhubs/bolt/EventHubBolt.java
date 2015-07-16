@@ -75,22 +75,22 @@ public class EventHubBolt extends BaseRichBolt {
       sender = eventHubClient.createPartitionSender(myPartitionId);
     }
     catch(Exception ex) {
-      logger.error(ex.getMessage());
+      collector.reportError(ex);
       throw new RuntimeException(ex);
     }
-
   }
 
   @Override
   public void execute(Tuple tuple) {
     try {
       sender.send(boltConfig.getEventDataFormat().serialize(tuple));
-      collector.ack(tuple);
     }
     catch(EventHubException ex) {
-      logger.error(ex.getMessage());
+      collector.reportError(ex);
       collector.fail(tuple);
+      return;
     }
+    collector.ack(tuple);
   }
 
   @Override

@@ -58,7 +58,7 @@ public class TridentPartitionManager implements ITridentPartitionManager {
       return true;
     }
     catch(EventHubException ex) {
-      logger.error("failed to open eventhub receiver: " + ex.getMessage());
+      logger.error("failed to open eventhub receiver.", ex);
       return false;
     }
   }

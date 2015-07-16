@@ -25,13 +25,11 @@ import com.microsoft.eventhubs.spout.MessageId;
 import com.microsoft.eventhubs.spout.EventData;
 import com.microsoft.eventhubs.spout.IEventHubReceiver;
 import org.apache.qpid.amqp_1_0.client.Message;
-import org.apache.qpid.amqp_1_0.jms.impl.TextMessageImpl;
 import org.apache.qpid.amqp_1_0.type.Binary;
 import org.apache.qpid.amqp_1_0.type.Section;
 import org.apache.qpid.amqp_1_0.type.messaging.Data;
 
 import com.microsoft.eventhubs.client.EventHubException;
-import com.microsoft.eventhubs.client.EventHubOffsetFilter;
 import com.microsoft.eventhubs.client.IEventHubFilter;
 
 /**

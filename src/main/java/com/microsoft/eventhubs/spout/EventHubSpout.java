@@ -152,7 +152,7 @@ public class EventHubSpout extends BaseRichSpout {
     try {
       preparePartitions(config, totalTasks, taskIndex, collector);
     } catch (Exception e) {
-      logger.error(e.getMessage());
+      collector.reportError(e);
       throw new RuntimeException(e);
     }
     
