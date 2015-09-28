@@ -19,18 +19,23 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.microsoft.eventhubs</groupId>
     <artifactId>eventhubs-storm-spout</artifactId>
-    <version>0.9.3</version>
+    <version>0.9.4</version>
     <packaging>jar</packaging>
     <name>EventHubs Storm Spout</name>
-
+    <repositories>
+        <repository>
+            <id>lib</id>
+            <url>file://${project.basedir}/lib</url>
+        </repository>
+    </repositories>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <eventhubs.client.version>0.9.1</eventhubs.client.version>
-		<maven.jar.plugin.version>2.5</maven.jar.plugin.version>
-		<maven.shade.plugin.version>2.3</maven.shade.plugin.version>
+        <eventhubs.client.version>1.0</eventhubs.client.version>
+        <maven.jar.plugin.version>2.5</maven.jar.plugin.version>
+        <maven.shade.plugin.version>2.3</maven.shade.plugin.version>
         <curator.version>2.5.0</curator.version>
         <storm.version>0.9.3</storm.version>
-		<junit.version>4.11</junit.version>
+        <junit.version>4.11</junit.version>
     </properties>
     <build>
         <plugins>
@@ -53,7 +58,7 @@
                     </transformers>
                     <outputFile>target/${project.artifactId}-${project.version}-jar-with-dependencies.jar</outputFile>
                 </configuration>
-	        </plugin>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
@@ -67,21 +72,21 @@
                 </configuration>
             </plugin>
             <plugin>
-		        <artifactId>maven-antrun-plugin</artifactId>
-		        <executions>
-		          <execution>
-		            <phase>package</phase>
-		            <configuration>
-		              <tasks>
-		                <copy file="src/main/resources/config.properties" tofile="target/eventhubs-config.properties"/>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                  <execution>
+                    <phase>package</phase>
+                    <configuration>
+                      <tasks>
+                        <copy file="src/main/resources/config.properties" tofile="target/eventhubs-config.properties"/>
                     </tasks>
-		            </configuration>
-		            <goals>
-		              <goal>run</goal>
-		            </goals>
-		          </execution>
-		        </executions>
-	        </plugin>
+                    </configuration>
+                    <goals>
+                      <goal>run</goal>
+                    </goals>
+                  </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
