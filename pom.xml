@@ -145,7 +145,44 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
+      <profile>
+          <!--
+            - Enable this profile when you wish to run your Topologies in local mode.  This will bring in the storm core library as well as basic logging functionality so you can see the output
+            -->
+          <id>local-mode</id>
+          <properties>
+              <sl4j.version>1.7.12</sl4j.version>
+          </properties>
+          <dependencies>
+              <dependency>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>slf4j-api</artifactId>
+                  <version>${sl4j.version}</version>
+              </dependency>
+              <dependency>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-core</artifactId>
+                  <version>${logback.version}</version>
+              </dependency>
+              <dependency>
+                  <groupId>ch.qos.logback</groupId>
+                  <artifactId>logback-classic</artifactId>
+                  <version>${logback.version}</version>
+              </dependency>
+              <dependency>
+                  <groupId>org.slf4j</groupId>
+                  <artifactId>log4j-over-slf4j</artifactId>
+                  <version>${log4j-over-slf4j.version}</version>
+              </dependency>
+              <dependency>
+                  <groupId>org.apache.storm</groupId>
+                  <artifactId>storm-core</artifactId>
+                  <version>${storm.version}</version>
+                  <scope>compile</scope>
+              </dependency>
+          </dependencies>
+      </profile>
+      <profile>
       <id>release</id>
       <build>
         <plugins>
@@ -207,6 +244,10 @@
               <groupId>org.slf4j</groupId>
               <artifactId>slf4j-log4j12</artifactId>
           </exclusion>
+          <exclusion>
+              <groupId>ch.qos.logback</groupId>
+              <artifactId>logback-classic</artifactId>
+          </exclusion>
       </exclusions>
     </dependency>
     <dependency>
@@ -217,41 +258,30 @@
       <scope>provided</scope>
       <type>jar</type>
     </dependency>
-    <dependency>
+  <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-framework</artifactId>
       <version>${curator.version}</version>
       <exclusions>
           <exclusion>
-              <groupId>log4j</groupId>
-              <artifactId>log4j</artifactId>
+              <groupId>org.slf4j</groupId>
+              <artifactId>slf4j-api</artifactId>
           </exclusion>
           <exclusion>
               <groupId>org.slf4j</groupId>
               <artifactId>slf4j-log4j12</artifactId>
           </exclusion>
+          <exclusion>
+              <groupId>log4j</groupId>
+              <artifactId>log4j</artifactId>
+          </exclusion>
       </exclusions>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-core</artifactId>
-        <version>${logback.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>ch.qos.logback</groupId>
-        <artifactId>logback-classic</artifactId>
-        <version>${logback.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>log4j-over-slf4j</artifactId>
-        <version>${log4j-over-slf4j.version}</version>
-    </dependency>
+  </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-  </dependencies> 
+  </dependencies>
 </project>
