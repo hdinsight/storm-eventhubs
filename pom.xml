@@ -36,9 +36,22 @@
         <curator.version>2.5.0</curator.version>
         <storm.version>0.9.3</storm.version>
         <junit.version>4.11</junit.version>
+
+        <!--
+        - Storm 0.9.3 Requires JDK 1.6 or higher, so we're safe to set this version for our library.
+        - See: https://github.com/apache/storm/blob/v0.9.3/pom.xml#L618
+        -->
+        <maven.compiler.target>1.6</maven.compiler.target>
+        <maven.compiler.source>1.6</maven.compiler.source>
     </properties>
     <build>
         <plugins>
+            <plugin>
+                <!-- Latest version of compiler plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
