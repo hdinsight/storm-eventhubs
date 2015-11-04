@@ -29,6 +29,13 @@ import org.apache.qpid.amqp_1_0.type.messaging.AmqpValue;
 import org.apache.qpid.amqp_1_0.type.messaging.ApplicationProperties;
 import org.apache.qpid.amqp_1_0.type.messaging.Data;
 
+/**
+ * This implementation converts the Message payload into Strings and passes them on.
+ *
+ * This makes the assumption that the payload is String data and not some other type of binary format (ie. compressed data for example).
+ *
+ * If you want to pass the raw bytes to your Bolts, use the {@link BinaryEventDataScheme} class.
+ */
 public class EventDataScheme implements IEventDataScheme {
 
   private static final long serialVersionUID = 1L;
