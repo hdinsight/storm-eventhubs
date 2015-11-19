@@ -13,7 +13,6 @@ install:
 build_script:
   - ps: |
       $env:PATH = "C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;" + $env:PATH
-      mvn install:install-file -Dfile="lib\eventhubs-client-1.0-jar-with-dependencies.jar" -DgroupId="com.microsoft.eventhubs.client" -DartifactId="eventhubs-client" -Dversion="1.0" -Dpackaging=jar
       mvn clean package -B -V
 cache:
   - C:\maven\
