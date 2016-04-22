@@ -19,7 +19,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.microsoft.eventhubs</groupId>
   <artifactId>eventhubs-storm-spout</artifactId>
-  <version>0.9.4</version>
+  <version>0.9.5</version>
   <packaging>jar</packaging>
   <name>EventHubs Storm Spout</name>
   <description>Azure EventHubs Spout for Apache Storm</description>

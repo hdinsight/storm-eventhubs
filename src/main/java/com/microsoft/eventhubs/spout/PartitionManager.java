@@ -47,10 +47,6 @@ public class PartitionManager extends SimplePartitionManager {
 
   @Override
   public EventData receive() {
-    if(pending.size() >= config.getMaxPendingMsgsPerPartition()) {
-      return null;
-    }
-
     EventData eventData;
     if (toResend.isEmpty()) {
       eventData = receiver.receive(ehReceiveTimeoutMs);
