@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *******************************************************************************/
-package com.microsoft.eventhubs.spout;
+package org.apache.storm.eventhubs.spout;
 
 import backtype.storm.tuple.Fields;
 import java.util.ArrayList;
