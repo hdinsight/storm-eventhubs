@@ -2,7 +2,7 @@
 
 This code will be finally merged into [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs).
 
-Refer to the (CHANGELOG)[CHANGELOG.md] for the list of changes.
+Refer to the [CHANGELOG](CHANGELOG.md) for the list of changes.
 
 **If you are using Storm 0.9.x, please use the 0.9.x branch in this same repo.**
 
