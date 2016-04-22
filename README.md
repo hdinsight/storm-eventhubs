@@ -1,8 +1,10 @@
-**:heavy_exclamation_mark:```IMPORTANT NOTE```:heavy_exclamation_mark:: This repository is a clone of [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs) to make the latest version of the EventHubs spout compatible with Apache Storm 0.9.3 on Microsoft HDInsight Clusters with version 3.2.**
+**:heavy_exclamation_mark:```IMPORTANT NOTE```:heavy_exclamation_mark:: This repository is a clone of [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs) to make the latest version of the EventHubs spout compatible with Apache Storm 0.10.x on Microsoft HDInsight Clusters with version 3.3 or above.**
 
-Users of Apache Storm 0.9.3 on Microsoft HDInsight Clusters with version 3.2 can take the benefits of any bug fixes landing in newer versions of storm-eventhubs spout through this project.
+This code will be finally merged into [Apache Storm External Eventhubs](https://github.com/apache/storm/tree/master/external/storm-eventhubs).
 
-**If you are using Storm 0.10.x or later, please use the storm-eventhubs from the [Apache Storm GitHub Project](https://github.com/apache/storm).**
+Refer to the (CHANGELOG)[CHANGELOG.md] for the list of changes.
+
+**If you are using Storm 0.9.x, please use the 0.9.x branch in this same repo.**
 
 =====================
 storm-eventhubs
@@ -30,13 +32,15 @@ the eventhubs configurations. Here is an example:
     # if not provided, will use storm's zookeeper settings
     # zookeeper.connectionstring=zookeeper0:2181,zookeeper1:2181,zookeeper2:2181
 
+    # optional - defaults to 10
     eventhubspout.checkpoint.interval = 10
+    # optional - defaults to 1024
     eventhub.receiver.credits = 1024
 
 Then you can use storm.cmd to submit the sample topology:
 
-    storm jar {jarfile} com.microsoft.eventhubs.samples.EventCount {topologyname} {spoutconffile}
-    where the {jarfile} should be: eventhubs-storm-spout-{version}-jar-with-dependencies.jar
+    storm jar {jarfile} org.apache.storm.eventhubs.samples.EventCount {topologyname} {spoutconffile}
+    where the {jarfile} should be: storm-eventhubs-{version}-jar-with-dependencies.jar
 
 ### Run EventHubSendClient ###
 We have included a simple EventHubs send client for testing purpose. You can run the client like this:
@@ -55,11 +59,3 @@ If you want to send messages to all partitions, use "-1" as partitionId.
 ### Related projects
 * https://github.com/hdinsight/eventhubs-client
 * https://github.com/hdinsight/hdinsight-storm-examples
-
-## Developers
-* Shanyu Zhao ([shzhao@microsoft.com](mailto: shzhao@microsoft.com))
-* SeongJoon Kwak ([sjkwak@microsoft.com](mailto: sjkwak@microsoft.com))
-* Ravi Tandon ([rtandon@microsoft.com](mailto: rtandon@microsoft.com))
-
-## Committer Sponsors
-* P. Taylor Goetz ([ptgoetz@apache.org](mailto:ptgoetz@apache.org))
