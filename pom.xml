@@ -17,11 +17,11 @@
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.microsoft.eventhubs</groupId>
-  <artifactId>eventhubs-storm-spout</artifactId>
-  <version>0.9.5</version>
+  <groupId>org.apache.storm.eventhubs</groupId>
+  <artifactId>storm-eventhubs</artifactId>
+  <version>0.10.0</version>
   <packaging>jar</packaging>
-  <name>EventHubs Storm Spout</name>
+  <name>storm-eventhubs</name>
   <description>Azure EventHubs Spout for Apache Storm</description>
   <url>https://github.com/hdinsight/storm-eventhubs</url>
   <licenses>
@@ -30,26 +30,6 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  <developers>
-    <developer>
-      <name>Shanyu Zhao</name>
-      <email>shzhao@microsoft.com</email>
-      <organization>Microsoft</organization>
-      <organizationUrl>http://www.microsoft.com</organizationUrl>
-    </developer>
-    <developer>
-      <name>SeongJoon Kwak</name>
-      <email>sjkwak@microsoft.com</email>
-      <organization>Microsoft</organization>
-      <organizationUrl>http://www.microsoft.com</organizationUrl>
-    </developer>
-    <developer>
-      <name>Ravi Tandon</name>
-      <email>rtandon@microsoft.com</email>
-      <organization>Microsoft</organization>
-      <organizationUrl>http://www.microsoft.com</organizationUrl>
-    </developer>
-  </developers>
   <scm>
     <connection>scm:git:git@github.com:hdinsight/storm-eventhubs.git</connection>
     <developerConnection>scm:git:git@github.com:hdinsight/storm-eventhubs.git</developerConnection>
@@ -74,26 +54,13 @@
     <maven.gpg.plugin.version>1.5</maven.gpg.plugin.version>
     <eventhubs.client.version>1.0</eventhubs.client.version>
     <curator.version>2.5.0</curator.version>
-    <storm.version>0.9.3</storm.version>
+    <storm.version>0.10.0</storm.version>
     <logback.version>1.0.6</logback.version>
     <log4j-over-slf4j.version>1.6.6</log4j-over-slf4j.version>
     <junit.version>4.11</junit.version>
-
-    <!--
-        - Storm 0.9.3 Requires JDK 1.6 or higher, so we're safe to set this version for our library.
-        - See: https://github.com/apache/storm/blob/v0.9.3/pom.xml#L618
-        -->
-    <maven.compiler.target>1.6</maven.compiler.target>
-    <maven.compiler.source>1.6</maven.compiler.source>
   </properties>
   <build>
     <plugins>
-      <plugin>
-        <!-- Latest version of compiler plugin -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
@@ -115,18 +82,6 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-jar-plugin</artifactId>
-        <version>${maven.jar.plugin.version}</version>
-        <configuration>
-          <archive>
-            <manifest>
-              <mainClass>com.microsoft.eventhubs.samples.EventCount</mainClass>
-            </manifest>
-          </archive>
-        </configuration>
-      </plugin>
-      <plugin>
         <artifactId>maven-antrun-plugin</artifactId>
         <executions>
           <execution>
@@ -145,44 +100,46 @@
     </plugins>
   </build>
   <profiles>
-      <profile>
-          <!--
+    <profile>
+      <!--
             - Enable this profile when you wish to run your Topologies in local mode.  This will bring in the storm core library as well as basic logging functionality so you can see the output
             -->
-          <id>local-mode</id>
-          <properties>
-              <sl4j.version>1.7.12</sl4j.version>
-          </properties>
-          <dependencies>
-              <dependency>
-                  <groupId>org.slf4j</groupId>
-                  <artifactId>slf4j-api</artifactId>
-                  <version>${sl4j.version}</version>
-              </dependency>
-              <dependency>
-                  <groupId>ch.qos.logback</groupId>
-                  <artifactId>logback-core</artifactId>
-                  <version>${logback.version}</version>
-              </dependency>
-              <dependency>
-                  <groupId>ch.qos.logback</groupId>
-                  <artifactId>logback-classic</artifactId>
-                  <version>${logback.version}</version>
-              </dependency>
-              <dependency>
-                  <groupId>org.slf4j</groupId>
-                  <artifactId>log4j-over-slf4j</artifactId>
-                  <version>${log4j-over-slf4j.version}</version>
-              </dependency>
-              <dependency>
-                  <groupId>org.apache.storm</groupId>
-                  <artifactId>storm-core</artifactId>
-                  <version>${storm.version}</version>
-                  <scope>compile</scope>
-              </dependency>
-          </dependencies>
-      </profile>
-      <profile>
+      <id>local-mode</id>
+      <properties>
+        <sl4j.version>1.7.12</sl4j.version>
+      </properties>
+      <dependencies>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>${sl4j.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-core</artifactId>
+          <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>ch.qos.logback</groupId>
+          <artifactId>logback-classic</artifactId>
+          <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>log4j-over-slf4j</artifactId>
+          <version>${log4j-over-slf4j.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.storm</groupId>
+          <artifactId>storm-core</artifactId>
+          <version>${storm.version}</version>
+          <!-- keep storm out of the jar-with-dependencies -->
+          <type>jar</type>
+          <scope>compile</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>release</id>
       <build>
         <plugins>
@@ -235,48 +192,36 @@
       <groupId>com.microsoft.eventhubs.client</groupId>
       <artifactId>eventhubs-client</artifactId>
       <version>${eventhubs.client.version}</version>
-      <exclusions>
-          <exclusion>
-              <groupId>log4j</groupId>
-              <artifactId>log4j</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-log4j12</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>ch.qos.logback</groupId>
-              <artifactId>logback-classic</artifactId>
-          </exclusion>
-      </exclusions>
+       <exclusions>
+           <exclusion>
+               <groupId>ch.qos.logback</groupId>
+               <artifactId>logback-classic</artifactId>
+           </exclusion>
+       </exclusions>
     </dependency>
     <dependency>
       <groupId>org.apache.storm</groupId>
       <artifactId>storm-core</artifactId>
       <version>${storm.version}</version>
       <!-- keep storm out of the jar-with-dependencies -->
-      <scope>provided</scope>
       <type>jar</type>
+      <scope>provided</scope>
     </dependency>
-  <dependency>
+    <dependency>
       <groupId>org.apache.curator</groupId>
       <artifactId>curator-framework</artifactId>
       <version>${curator.version}</version>
       <exclusions>
-          <exclusion>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-api</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>org.slf4j</groupId>
-              <artifactId>slf4j-log4j12</artifactId>
-          </exclusion>
-          <exclusion>
-              <groupId>log4j</groupId>
-              <artifactId>log4j</artifactId>
-          </exclusion>
+        <exclusion>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
       </exclusions>
-  </dependency>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
