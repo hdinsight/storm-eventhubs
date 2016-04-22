@@ -94,19 +94,22 @@ public class TestPartitionManager {
     //all events are sent successfully, return last sent offset
     assertEquals("2", mock.checkpoint());
   }
-  
+
+  //The test behavior is now changed. We no longer will manage max pending messages number in spout.
+  //One should rather use Storm Config to configure max pending tuples
+  //If the downstream bolts cannot keep up, the spout can run out of memory eventually
   @Test
-  public void testPartitionManagerMaxPendingMessages() {
+  public void testPartitionManagerNoLongerNeedsMaxPendingMessages() {
     PartitionManagerCallerMock mock
       = new PartitionManagerCallerMock("1");
     String result = mock.execute("r1024");
-    //any receive call after exceeding max pending messages results in null
+    //any receive call should work even after 1024 messages
     result = mock.execute("r2");
-    assertEquals("null,null", result);
-    result = mock.execute("a0,a1,r2");
     assertEquals("1024,1025", result);
+    result = mock.execute("a0,a1,r2");
+    assertEquals("1026,1027", result);
   }
-  
+
   @Test
   public void testPartitionManagerEnqueueTimeFilter() {
     PartitionManagerCallerMock mock

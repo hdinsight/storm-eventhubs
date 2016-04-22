@@ -36,8 +36,13 @@ public class PartitionManagerCallerMock {
   public PartitionManagerCallerMock(String partitionId, long enqueueTimeFilter) {
     EventHubReceiverMock receiver = new EventHubReceiverMock(partitionId);
     EventHubSpoutConfig conf = new EventHubSpoutConfig("username", "password",
-      "namespace", "entityname", 16, "zookeeper", 10, 1024, 1024, enqueueTimeFilter);
-    conf.setTopologyName("TestTopo");
+      "namespace", "entityname", 16).
+        withZkConnectionString("zookeeper").
+        withCheckpointIntervalInSeconds(10).
+        withReceiverCredits(1024).
+        withEnqueueTimeFilter(enqueueTimeFilter);
+    conf.withTopologyName("TestTopo");
+
     stateStore = new StateStoreMock();
     this.pm = new PartitionManager(conf, partitionId, stateStore, receiver);
     

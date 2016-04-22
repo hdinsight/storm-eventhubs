@@ -63,11 +63,7 @@ public class EventCount {
     int partitionCount = Integer.parseInt(properties.getProperty("eventhubspout.partitions.count"));
     int checkpointIntervalInSeconds = Integer.parseInt(properties.getProperty("eventhubspout.checkpoint.interval"));
     int receiverCredits = Integer.parseInt(properties.getProperty("eventhub.receiver.credits"));
-    String maxPendingMsgsPerPartitionStr = properties.getProperty("eventhubspout.max.pending.messages.per.partition");
-    if(maxPendingMsgsPerPartitionStr == null) {
-      maxPendingMsgsPerPartitionStr = "1024";
-    }
-    int maxPendingMsgsPerPartition = Integer.parseInt(maxPendingMsgsPerPartitionStr);
+
     String enqueueTimeDiffStr = properties.getProperty("eventhub.receiver.filter.timediff");
     if(enqueueTimeDiffStr == null) {
       enqueueTimeDiffStr = "0";
@@ -85,12 +81,11 @@ public class EventCount {
     System.out.println("  receiver credits: " + receiverCredits);
     spoutConfig = new EventHubSpoutConfig(username, password,
       namespaceName, entityPath, partitionCount, zkEndpointAddress,
-      checkpointIntervalInSeconds, receiverCredits, maxPendingMsgsPerPartition,
-      enqueueTimeFilter);
+      checkpointIntervalInSeconds, receiverCredits, enqueueTimeFilter);
 
     if(targetFqnAddress != null)
     {
-      spoutConfig.setTargetAddress(targetFqnAddress);      
+      spoutConfig.setTargetAddress(targetFqnAddress);
     }
     spoutConfig.setConsumerGroupName(consumerGroupName);
 
@@ -103,13 +98,13 @@ public class EventCount {
       //set topology name so that sample Trident topology can use it as stream name.
       spoutConfig.setTopologyName(args[0]);
     }
-	}
-  
+  }
+
   protected EventHubSpout createEventHubSpout() {
     EventHubSpout eventHubSpout = new EventHubSpout(spoutConfig);
     return eventHubSpout;
   }
-	
+
   protected StormTopology buildTopology(EventHubSpout eventHubSpout) {
     TopologyBuilder topologyBuilder = new TopologyBuilder();
 
@@ -121,9 +116,9 @@ public class EventCount {
       .globalGrouping("PartialCountBolt").setNumTasks(1);
     return topologyBuilder.createTopology();
   }
-	
+
   protected void submitTopology(String[] args, StormTopology topology) throws Exception {
-	  Config config = new Config();
+    Config config = new Config();
     config.setDebug(false);
     //Enable metrics
     config.registerMetricsConsumer(backtype.storm.metric.LoggingMetricsConsumer.class, 1);
@@ -142,7 +137,7 @@ public class EventCount {
 
       localCluster.shutdown();
     }
-	}
+  }
   
   protected void runScenario(String[] args) throws Exception{
     readEHConfig(args);

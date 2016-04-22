@@ -35,11 +35,10 @@ public class EventHubSpoutConfig implements Serializable {
   private String zkConnectionString = null; //if null then use zookeeper used by Storm
   private int checkpointIntervalInSeconds = 10;
   private int receiverCredits = 1024;
-  private int maxPendingMsgsPerPartition = 1024;
   private long enqueueTimeFilter = 0; //timestamp in millisecond, 0 means disabling filter
   private String connectionString;
   private String topologyName;
-  private IEventDataScheme scheme = new EventDataScheme();
+  private IEventDataScheme scheme = new StringEventDataScheme(); //Use StringEventDataScheme for backwards compatibility
   private String consumerGroupName = null; //if null then use default consumer group
 
   //These are mandatory parameters
@@ -48,7 +47,7 @@ public class EventHubSpoutConfig implements Serializable {
     this.userName = username;
     this.password = password;
     this.connectionString = new ConnectionStringBuilder(username, password,
-    		namespace).getConnectionString();
+        namespace).getConnectionString();
     this.namespace = namespace;
     this.entityPath = entityPath;
     this.partitionCount = partitionCount;
@@ -60,7 +59,7 @@ public class EventHubSpoutConfig implements Serializable {
     this(username, password, namespace, entityPath, partitionCount);
     setZkConnectionString(zkConnectionString);
   }
-  
+
   //Keep this constructor for backward compatibility
   public EventHubSpoutConfig(String username, String password, String namespace,
       String entityPath, int partitionCount, String zkConnectionString,
@@ -74,16 +73,14 @@ public class EventHubSpoutConfig implements Serializable {
   //Keep this constructor for backward compatibility
   public EventHubSpoutConfig(String username, String password, String namespace,
     String entityPath, int partitionCount, String zkConnectionString,
-    int checkpointIntervalInSeconds, int receiverCredits, int maxPendingMsgsPerPartition, long enqueueTimeFilter) {
-    
+    int checkpointIntervalInSeconds, int receiverCredits, long enqueueTimeFilter) {
     this(username, password, namespace, entityPath, partitionCount,
         zkConnectionString, checkpointIntervalInSeconds, receiverCredits);
-    setMaxPendingMsgsPerPartition(maxPendingMsgsPerPartition);
     setEnqueueTimeFilter(enqueueTimeFilter);
   }
 
   public String getNamespace() {
-    return namespace;
+    return this.namespace;
   }
 
   public String getEntityPath() {
@@ -91,71 +88,99 @@ public class EventHubSpoutConfig implements Serializable {
   }
 
   public int getPartitionCount() {
-    return partitionCount;
+    return this.partitionCount;
   }
 
   public String getZkConnectionString() {
-    return zkConnectionString;
+    return this.zkConnectionString;
   }
 
   public void setZkConnectionString(String value) {
-    zkConnectionString = value;
+    this.zkConnectionString = value;
+  }
+
+  public EventHubSpoutConfig withZkConnectionString(String value) {
+    this.setZkConnectionString(value);
+    return this;
   }
 
   public int getCheckpointIntervalInSeconds() {
-    return checkpointIntervalInSeconds;
+    return this.checkpointIntervalInSeconds;
   }
 
   public void setCheckpointIntervalInSeconds(int value) {
-    checkpointIntervalInSeconds = value;
+    this.checkpointIntervalInSeconds = value;
   }
-  
+
+  public EventHubSpoutConfig withCheckpointIntervalInSeconds(int value) {
+    this.setCheckpointIntervalInSeconds(value);
+    return this;
+  }
+
   public int getReceiverCredits() {
-    return receiverCredits;
+    return this.receiverCredits;
   }
 
   public void setReceiverCredits(int value) {
-    receiverCredits = value;
-  }
-  
-  public int getMaxPendingMsgsPerPartition() {
-    return maxPendingMsgsPerPartition;
+    this.receiverCredits = value;
   }
 
-  public void setMaxPendingMsgsPerPartition(int value) {
-    maxPendingMsgsPerPartition = value;
+  public EventHubSpoutConfig withReceiverCredits(int value) {
+    this.setReceiverCredits(value);
+    return this;
   }
-  
+
   public long getEnqueueTimeFilter() {
-    return enqueueTimeFilter;
+    return this.enqueueTimeFilter;
   }
 
   public void setEnqueueTimeFilter(long value) {
-    enqueueTimeFilter = value;
+    this.enqueueTimeFilter = value;
+  }
+
+  public EventHubSpoutConfig withEnqueueTimeFilter(long value) {
+    this.setEnqueueTimeFilter(value);
+    return this;
   }
 
   public String getTopologyName() {
-    return topologyName;
+    return this.topologyName;
   }
 
-  public void setTopologyName(String value) {
-    topologyName = value;
+  public EventHubSpoutConfig setTopologyName(String value) {
+    this.topologyName = value;
+    return this;
+  }
+
+  public EventHubSpoutConfig withTopologyName(String value) {
+    this.setTopologyName(value);
+    return this;
   }
 
   public IEventDataScheme getEventDataScheme() {
-    return scheme;
+    return this.scheme;
   }
 
-  public void setEventDataScheme(IEventDataScheme scheme) {
-    this.scheme = scheme;
+  public void setEventDataScheme(IEventDataScheme value) {
+    this.scheme = value;
   }
 
+  public EventHubSpoutConfig withEventDataScheme(IEventDataScheme value) {
+    this.setEventDataScheme(value);
+    return this;
+  }
+  
   public String getConsumerGroupName() {
     return consumerGroupName;
   }
 
   public void setConsumerGroupName(String value) {
-    consumerGroupName = value;
+    this.consumerGroupName = value;
+  }
+
+  public EventHubSpoutConfig withConsumerGroupName(String value) {
+    this.setConsumerGroupName(value);
+    return this;
   }
 
   public List<String> getPartitionList() {
@@ -169,11 +194,16 @@ public class EventHubSpoutConfig implements Serializable {
   }
 
   public String getConnectionString() {
-    return connectionString;
+    return this.connectionString;
   }
 
-  public void setTargetAddress(String targetFqnAddress) {
+  public void setTargetAddress(String value) {
     this.connectionString = new ConnectionStringBuilder(userName, password,
-    		namespace, targetFqnAddress).getConnectionString();
+      namespace, value).getConnectionString();
+  }
+
+  public EventHubSpoutConfig withTargetAddress(String value) {
+    this.setTargetAddress(value);
+    return this;
   }
 }
