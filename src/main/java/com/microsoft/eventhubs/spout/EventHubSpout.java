@@ -96,11 +96,11 @@ public class EventHubSpout extends BaseRichSpout {
   
   /**
    * This is a extracted method that is easy to test
-   * @param config
-   * @param totalTasks
-   * @param taskIndex
-   * @param collector
-   * @throws Exception
+   * @param config Configuration
+   * @param totalTasks Number of total tasks spawned
+   * @param taskIndex Index of current task
+   * @param collector SpoutOutputCollector
+   * @throws Exception Thrown when spout fails to open connection to target partition.
    */
   public void preparePartitions(Map config, int totalTasks, int taskIndex, SpoutOutputCollector collector) throws Exception {
     this.collector = collector;
@@ -121,8 +121,8 @@ public class EventHubSpout extends BaseRichSpout {
         zkEndpointAddress = sb.toString();
       }
       stateStore = new ZookeeperStateStore(zkEndpointAddress,
-          (Integer)config.get(Config.STORM_ZOOKEEPER_RETRY_TIMES),
-          (Integer)config.get(Config.STORM_ZOOKEEPER_RETRY_INTERVAL));
+          ((Number) config.get(Config.STORM_ZOOKEEPER_RETRY_TIMES)).intValue(),
+          ((Number) config.get(Config.STORM_ZOOKEEPER_RETRY_INTERVAL)).intValue());
     }
     stateStore.open();
 
@@ -167,7 +167,7 @@ public class EventHubSpout extends BaseRichSpout {
           }
           return concatMetricsDataMaps;
       }
-    }, (Integer)config.get(Config.TOPOLOGY_BUILTIN_METRICS_BUCKET_SIZE_SECS));
+    }, ((Number) config.get(Config.TOPOLOGY_BUILTIN_METRICS_BUCKET_SIZE_SECS)).intValue());
     logger.info("end open()");
   }
 
